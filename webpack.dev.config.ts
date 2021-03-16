@@ -53,6 +53,10 @@ const config: webpack.Configuration = {
 					},
 				],
 			},
+			{
+				test: /\.svg$/i,
+				use: ['@svgr/webpack'],
+			},
 		],
 	},
 	devServer: {

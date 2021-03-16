@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage/useLocalStorage';
-import { makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import NavRoom from '@/components/NavRoom';
+import SelectLang from '@/components/SelectLang';
+import Enlarge from '@/assets/enlarge.svg';
+import Minimize from '@/assets/minimize.svg';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -14,6 +17,7 @@ const useStyles = makeStyles(() => ({
 		borderRadius: 20,
 		overflow: 'hidden',
 	},
+	wrapper: {},
 	appBar: {
 		position: 'inherit',
 		backgroundColor: 'rgba(0, 0, 0, .6)',
@@ -32,6 +36,26 @@ const useStyles = makeStyles(() => ({
 			width: 25,
 		},
 	},
+	enlarge: {
+		position: 'absolute',
+		top: 5,
+		right: 32,
+		borderRadius: '50%',
+		width: 30,
+		height: 30,
+		minWidth: 30,
+		padding: 0,
+	},
+	minimize: {
+		position: 'absolute',
+		top: 5,
+		right: 5,
+		borderRadius: '50%',
+		width: 30,
+		height: 30,
+		minWidth: 30,
+		padding: 0,
+	},
 }));
 
 const Chat: FC<{}> = () => {
@@ -40,8 +64,15 @@ const Chat: FC<{}> = () => {
 
 	return (
 		<div className={classes.root}>
-			<div>
+			<div className={classes.wrapper}>
 				<NavRoom />
+				<SelectLang />
+				<Button className={classes.enlarge}>
+					<Enlarge />
+				</Button>
+				<Button className={classes.minimize}>
+					<Minimize />
+				</Button>
 			</div>
 		</div>
 	);
