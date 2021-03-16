@@ -1,20 +1,24 @@
 import React, { FC } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Container } from '@material-ui/core';
-import { routes } from '@/routes';
+import { Container, makeStyles, Theme } from '@material-ui/core';
+import Chat from '@/modules/Chat';
+import bgImage from './assets/coc_game_ui_update 1.png';
 
-const App: FC<{}> = () => (
-	<Router>
-		<Container>
-			<Switch>
-				{routes.map(({ path, Component }) => (
-					<Route key={path} path={path} exact>
-						<Component />
-					</Route>
-				))}
-			</Switch>
+const useStyles = makeStyles((theme: Theme) => ({
+	root: {
+		maxWidth: '100vw',
+		height: '100vh',
+		background: `url(${bgImage}) center center /auto no-repeat`,
+		position: 'relative',
+	},
+}));
+
+const App: FC<{}> = () => {
+	const classes = useStyles();
+	return (
+		<Container className={classes.root}>
+			<Chat />
 		</Container>
-	</Router>
-);
+	);
+};
 
 export default App;
