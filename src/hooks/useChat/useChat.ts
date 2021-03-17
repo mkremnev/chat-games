@@ -12,6 +12,11 @@ export type Message = {
 	createdAt: string;
 };
 
+export type MessageType = {
+	messageText: string;
+	senderName: string;
+};
+
 export type Messages = {
 	userId: string;
 	message: Message;
@@ -46,13 +51,7 @@ export const useChat = (roomId: string) => {
 		};
 	}, [roomId, userId, username]);
 
-	const sendMessage = ({
-		messageText,
-		senderName,
-	}: {
-		messageText: string;
-		senderName: string;
-	}) => {
+	const sendMessage = ({ messageText, senderName }: MessageType) => {
 		const message = {
 			from: senderName,
 			text: messageText,

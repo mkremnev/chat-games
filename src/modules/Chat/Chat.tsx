@@ -5,6 +5,8 @@ import NavRoom from '@/components/NavRoom';
 import SelectLang from '@/components/SelectLang';
 import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
+import SendMessageForm from '@/components/SendMessageForm';
+import { useChat } from '@/hooks/useChat/useChat';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -60,7 +62,8 @@ const useStyles = makeStyles(() => ({
 
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
-	const [username, setUsername] = useLocalStorage('username', 'Maxim');
+	const [username] = useLocalStorage('username', 'Maxim');
+	const { messages, sendMessage } = useChat('common');
 
 	return (
 		<div className={classes.root}>
@@ -73,6 +76,10 @@ const Chat: FC<{}> = () => {
 				<Button className={classes.minimize}>
 					<Minimize />
 				</Button>
+				<SendMessageForm
+					username={username}
+					sendMessage={sendMessage}
+				/>
 			</div>
 		</div>
 	);
