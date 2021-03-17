@@ -8,6 +8,7 @@
 		"noImplicitAny": true,
 		"baseUrl": "./",
 		"paths": {
+			"@/types/*": ["types/*"],
 			"@/components/*": ["src/components/*"],
 			"@/modules/*": ["src/modules/*"],
 			"@/*": ["src/*"]
@@ -17,5 +18,5 @@
 		"strict": true
 	},
 	"exclude": ["node_modules"],
-	"include": ["types/img.d.ts"]
+	"include": ["types/svg.d.ts", "types/img.d.ts", "src/**/*"]
 }
