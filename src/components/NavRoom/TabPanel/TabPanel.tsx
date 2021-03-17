@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -7,7 +7,20 @@ interface TabPanelProps {
 	value: number;
 }
 
+const useStyles = makeStyles(() => ({
+	root: {
+		padding: '0 10px',
+		height: 320,
+		color: '#fff',
+		overflowY: 'scroll',
+		'&::-webkit-scrollbar': {
+			width: 0,
+		},
+	},
+}));
+
 export const TabPanel: FC<TabPanelProps> = (props: TabPanelProps) => {
+	const classes = useStyles();
 	const { children, value, index, ...other } = props;
 
 	return (
@@ -19,7 +32,7 @@ export const TabPanel: FC<TabPanelProps> = (props: TabPanelProps) => {
 			{...other}
 		>
 			{value === index && (
-				<Box p={3}>
+				<Box p={3} className={classes.root}>
 					<Typography>{children}</Typography>
 				</Box>
 			)}

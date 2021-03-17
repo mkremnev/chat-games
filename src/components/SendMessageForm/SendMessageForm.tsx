@@ -1,10 +1,4 @@
-import React, {
-	ChangeEvent,
-	FC,
-	FormEvent,
-	KeyboardEvent,
-	useState,
-} from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import { Picker } from 'emoji-mart';
 import { Button, makeStyles, TextField } from '@material-ui/core';
 import Emoji from '@/assets/emodjis.svg';
@@ -18,6 +12,11 @@ const useStyles = makeStyles(() => ({
 		backgroundColor: 'rgba(0, 0, 0, .5)',
 		width: '100%',
 		height: 40,
+		'& .emoji-mart-scroll': {
+			'&::-webkit-scrollbar': {
+				width: 0,
+			},
+		},
 	},
 	input: {
 		padding: '0 20px 0 15px',
