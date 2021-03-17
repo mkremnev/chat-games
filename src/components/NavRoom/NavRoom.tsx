@@ -23,7 +23,11 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-export const NavRoom: FC<{}> = () => {
+export type NavRoomProp = {
+	commonElement: React.ReactElement<any, any>;
+};
+
+export const NavRoom: FC<NavRoomProp> = ({ commonElement }) => {
 	const classes = useStyles();
 	const [roomId, setRoomId] = useState(0);
 
@@ -51,7 +55,7 @@ export const NavRoom: FC<{}> = () => {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={roomId} index={0}>
-				Общий
+				{commonElement}
 			</TabPanel>
 			<TabPanel value={roomId} index={1}>
 				Клан

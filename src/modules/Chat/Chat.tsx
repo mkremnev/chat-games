@@ -6,6 +6,7 @@ import SelectLang from '@/components/SelectLang';
 import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
 import SendMessageForm from '@/components/SendMessageForm';
+import MessageList from '@/components/MessageList';
 import { useChat } from '@/hooks/useChat/useChat';
 
 const useStyles = makeStyles(() => ({
@@ -63,12 +64,48 @@ const useStyles = makeStyles(() => ({
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
 	const [username] = useLocalStorage('username', 'Maxim');
-	const { messages, sendMessage } = useChat('common');
+	const { sendMessage } = useChat('common');
+	const messages = [
+		{
+			id: '81d55d55-34ed-472f-9326-f7d8a7842a5q',
+			from: 'username',
+			text: 'Message text.',
+			createdAt: '2021-02-01T14:13:27.000Z',
+		},
+		{
+			id: '81d55d55-34ed-472f-9326-f7d8a7842a52',
+			from: 'username',
+			text: 'Message text.',
+			createdAt: '2021-02-01T14:13:27.000Z',
+		},
+		{
+			id: '81d55d55-34ed-472f-9326-f7d8a7842a53',
+			from: 'username',
+			text: 'Message text.',
+			createdAt: '2021-02-01T14:13:27.000Z',
+		},
+		{
+			id: '81d55d55-34ed-472f-9326-f7d8a7842a54',
+			from: 'username',
+			text: 'Message text.',
+			createdAt: '2021-02-01T14:13:27.000Z',
+		},
+		{
+			id: '81d55d55-34ed-472f-9326-f7d8a7842a55',
+			from: 'username',
+			text: 'Message text.',
+			createdAt: '2021-02-01T14:13:27.000Z',
+		},
+	];
 
 	return (
 		<div className={classes.root}>
 			<div className={classes.wrapper}>
-				<NavRoom />
+				<NavRoom
+					commonElement={
+						<MessageList messages={messages} username={username} />
+					}
+				/>
 				<SelectLang />
 				<Button className={classes.enlarge}>
 					<Enlarge />

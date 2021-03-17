@@ -33,7 +33,7 @@ export const TabPanel: FC<TabPanelProps> = (props: TabPanelProps) => {
 		>
 			{value === index && (
 				<Box p={3} className={classes.root}>
-					<Typography>{children}</Typography>
+					{children}
 				</Box>
 			)}
 		</div>
