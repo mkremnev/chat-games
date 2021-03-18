@@ -45,8 +45,6 @@ export const NavRoom: FC<NavRoomProp> = ({ commonElement }) => {
 		setRoomId(index);
 	};
 
-	const onclick = () => console.log(roomId);
-
 	return (
 		<Fragment>
 			<AppBar className={classes.appBar}>
@@ -57,10 +55,10 @@ export const NavRoom: FC<NavRoomProp> = ({ commonElement }) => {
 					scrollButtons="on"
 					className={classes.tabs}
 				>
-					<Tab label="Общий" onClick={onclick} />
-					<Tab label="Клан" onClick={onclick} />
-					<Tab label="Друзья" onClick={onclick} />
-					<Tab label="Новости" onClick={onclick} />
+					<Tab label="Общий" />
+					<Tab label="Клан" />
+					<Tab label="Друзья" />
+					<Tab label="Новости" />
 				</Tabs>
 			</AppBar>
 			<TabPanel value={roomId} index={0}>

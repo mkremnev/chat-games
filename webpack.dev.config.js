@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var path_1 = require("path");
-var html_webpack_plugin_1 = require("html-webpack-plugin");
+var path = require("path");
+var htmlWebpackPlugin = require("html-webpack-plugin");
 var config = {
     entry: ['./src/index.tsx'],
     mode: 'development',
-    devtool: 'source-map',
+    devtool: 'cheap-eval-source-map',
     output: {
-        path: path_1.default.join(__dirname, '/dist'),
+        path: path.join(__dirname, '/dist'),
         filename: 'index.js',
         publicPath: '/',
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
-            types: path_1.default.resolve(__dirname, 'types/*'),
-            components: path_1.default.resolve(__dirname, 'src/components'),
-            modules: path_1.default.resolve(__dirname, 'src/modules'),
-            '@': path_1.default.resolve(__dirname, 'src'),
+            types: path.resolve(__dirname, 'types/*'),
+            components: path.resolve(__dirname, 'src/components'),
+            modules: path.resolve(__dirname, 'src/modules'),
+            '@': path.resolve(__dirname, 'src'),
         },
     },
     module: {
@@ -67,7 +67,7 @@ var config = {
         port: 5000,
     },
     plugins: [
-        new html_webpack_plugin_1.default({
+        new htmlWebpackPlugin({
             template: './public/index.html',
         }),
     ],

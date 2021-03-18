@@ -19,8 +19,6 @@ export type MessageType = {
 export const useChat = (roomId: string) => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
-	const [username] = useLocalStorage('username');
-
 	const socketRef = useRef<Socket | null>(null);
 
 	useEffect(() => {
@@ -37,7 +35,7 @@ export const useChat = (roomId: string) => {
 		return () => {
 			socketRef.current!.disconnect();
 		};
-	}, [roomId, username, messages]);
+	}, [roomId, messages]);
 
 	const sendMessage = ({ messageText, senderName }: MessageType) => {
 		const message = {

@@ -1,18 +1,15 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import { MessageCard } from '@/components/MessageCard/MessageCard';
 import { Message } from '@/hooks/useChat/useChat';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
 	createStyles({
 		root: {
 			width: '100%',
 			maxWidth: 360,
 			backgroundColor: 'transparent',
-		},
-		nested: {
-			paddingLeft: theme.spacing(4),
 		},
 	}),
 );

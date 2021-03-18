@@ -15,6 +15,9 @@ const useStyles = makeStyles({
 		boxShadow: 'none',
 		alignItems: 'center',
 	},
+	rootReverse: {
+		flexDirection: 'row-reverse',
+	},
 	wrapperTitle: {
 		display: 'flex',
 		flexWrap: 'wrap',
@@ -39,16 +42,23 @@ const useStyles = makeStyles({
 		marginRight: 5,
 	},
 	content: {
-		marginBottom: 12,
 		backgroundColor: '#fff',
 		borderRadius: '20px 20px 20px 0px;',
 		padding: '11px 12px',
-		margin: '0 10px 0 0',
+		margin: '0 10px 12px 0',
 		minWidth: 150,
 		maxWidth: '80%',
 	},
+	contentReverse: {
+		margin: '0 0 12px 10px',
+		borderRadius: ' 20px 20px 0px 20px',
+		backgroundColor: '#212121',
+		color: '#ffffff',
+	},
 	text: {
 		color: '#rgb(0,0,0)',
+		wordBreak: 'break-word',
+		overflowWrap: 'break-word',
 	},
 	clock: {
 		color: 'rgba(255,255,255, .4)',
@@ -75,9 +85,16 @@ export const MessageCard: FC<MessageCardProps> = ({ msg, username }) => {
 	const firstUpper = from[0].toUpperCase() + from.slice(1);
 	const level = Math.floor(Math.random() * Math.floor(10));
 
+	const user = username === msg.from;
+
 	return (
-		<Card className={classes.root}>
-			<div className={classes.content}>
+		<Card className={clsx(classes.root, user && classes.rootReverse)}>
+			<div
+				className={clsx(
+					classes.content,
+					user && classes.contentReverse,
+				)}
+			>
 				{username !== msg.from ? (
 					<div className={classes.wrapperTitle}>
 						<span className={classes.iconLeft}>

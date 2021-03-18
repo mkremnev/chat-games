@@ -1,8 +1,14 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import { Picker } from 'emoji-mart';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import {
+	Button,
+	InputAdornment,
+	makeStyles,
+	TextField,
+} from '@material-ui/core';
 import Emoji from '@/assets/emodjis.svg';
 import { MessageType } from '@/hooks/useChat/useChat';
+import { color } from '@storybook/addon-knobs';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -22,7 +28,7 @@ const useStyles = makeStyles(() => ({
 		padding: '0 20px 0 15px',
 		'& input': {
 			color: '#fff',
-			padding: '12px 0',
+			padding: '12px 18px 12px 0',
 			'&::placeholder': {
 				color: 'rgba(255, 255, 255, .5)',
 			},
@@ -83,6 +89,9 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
 					value={text}
 					className={classes.input}
 					onKeyPress={(ev) => keyPress(ev)}
+					inputProps={{
+						maxLength: 200,
+					}}
 				/>
 
 				<Button

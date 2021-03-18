@@ -1,11 +1,11 @@
-import path from 'path';
-import htmlWebpackPlugin from 'html-webpack-plugin';
-import webpack from 'webpack';
+import path = require('path');
+import htmlWebpackPlugin = require('html-webpack-plugin');
+import webpack = require('webpack');
 
 const config: webpack.Configuration = {
 	entry: ['./src/index.tsx'],
 	mode: 'development',
-	devtool: 'source-map',
+	devtool: 'cheap-eval-source-map',
 	output: {
 		path: path.join(__dirname, '/dist'),
 		filename: 'index.js',
