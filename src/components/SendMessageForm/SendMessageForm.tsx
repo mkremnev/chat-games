@@ -30,8 +30,8 @@ const useStyles = makeStyles(() => ({
 	},
 	button: {
 		position: 'absolute',
-		right: 0,
-		top: 0,
+		right: -8,
+		top: 3,
 	},
 }));
 

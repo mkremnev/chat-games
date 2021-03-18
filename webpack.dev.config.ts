@@ -43,7 +43,7 @@ const config: webpack.Configuration = {
 				use: ['style-loader', 'css-loader'],
 			},
 			{
-				test: /\.(png|jpg|gif)$/i,
+				test: /\.(png|jpg|gif|woff2)$/i,
 				use: [
 					{
 						loader: 'url-loader',

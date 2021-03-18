@@ -64,39 +64,7 @@ const useStyles = makeStyles(() => ({
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
 	const [username] = useLocalStorage('username', 'Maxim');
-	const { sendMessage } = useChat('common');
-	const messages = [
-		{
-			id: '81d55d55-34ed-472f-9326-f7d8a7842a5q',
-			from: 'username',
-			text: 'Message text.',
-			createdAt: '2021-02-01T14:13:27.000Z',
-		},
-		{
-			id: '81d55d55-34ed-472f-9326-f7d8a7842a52',
-			from: 'username',
-			text: 'Message text.',
-			createdAt: '2021-02-01T14:13:27.000Z',
-		},
-		{
-			id: '81d55d55-34ed-472f-9326-f7d8a7842a53',
-			from: 'username',
-			text: 'Message text.',
-			createdAt: '2021-02-01T14:13:27.000Z',
-		},
-		{
-			id: '81d55d55-34ed-472f-9326-f7d8a7842a54',
-			from: 'username',
-			text: 'Message text.',
-			createdAt: '2021-02-01T14:13:27.000Z',
-		},
-		{
-			id: '81d55d55-34ed-472f-9326-f7d8a7842a55',
-			from: 'username',
-			text: 'Message text.',
-			createdAt: '2021-02-01T14:13:27.000Z',
-		},
-	];
+	const { messages, sendMessage } = useChat('common');
 
 	return (
 		<div className={classes.root}>

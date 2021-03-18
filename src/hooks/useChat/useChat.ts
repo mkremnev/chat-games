@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useLocalStorage } from '@/hooks/useLocalStorage/useLocalStorage';
-import { nanoid } from '@reduxjs/toolkit';
 
 const SERVER_URL = 'wss://api-23eqo.ondigitalocean.app';
 
@@ -17,15 +16,8 @@ export type MessageType = {
 	senderName: string;
 };
 
-export type Messages = {
-	userId: string;
-	message: Message;
-};
-
 export const useChat = (roomId: string) => {
-	const [messages, setMessages] = useState<Messages[]>([]);
-
-	const [userId] = useLocalStorage('userId', nanoid(8));
+	const [messages, setMessages] = useState<Message[]>([]);
 
 	const [username] = useLocalStorage('username');
 
@@ -33,23 +25,19 @@ export const useChat = (roomId: string) => {
 
 	useEffect(() => {
 		socketRef.current = io(SERVER_URL, {
-			query: { roomId },
 			transports: ['websocket'],
 			upgrade: false,
 		});
 
 		socketRef.current.emit('message');
-		socketRef.current.on('messages', (messages) => {
-			const newMessages = messages.map((msg: Messages) =>
-				msg.userId === userId ? { ...msg, currentUser: true } : msg,
-			);
-			setMessages(newMessages);
+		socketRef.current.on('message', (message: Message) => {
+			setMessages([...messages, message]);
 		});
 
 		return () => {
 			socketRef.current!.disconnect();
 		};
-	}, [roomId, userId, username]);
+	}, [roomId, username, messages]);
 
 	const sendMessage = ({ messageText, senderName }: MessageType) => {
 		const message = {
@@ -65,6 +53,12 @@ export const useChat = (roomId: string) => {
 				console.log('Success');
 			}
 		});
+
+		const createAt = new Date();
+		setMessages([
+			...messages,
+			{ ...message, createdAt: createAt.toString(), id: '123123' },
+		]);
 	};
 
 	return { messages, sendMessage };

@@ -20,6 +20,15 @@ const useStyles = makeStyles(() => ({
 		'& .MuiTabScrollButton-root': {
 			width: 25,
 		},
+		'& .MuiTab-textColorInherit': {
+			color: '#23B838',
+		},
+		'& .Mui-selected': {
+			color: '#FFFFFF',
+		},
+		'& .MuiTabs-indicator': {
+			backgroundColor: '#23B838',
+		},
 	},
 }));
 

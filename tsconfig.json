@@ -18,5 +18,10 @@
 		"strict": true
 	},
 	"exclude": ["node_modules"],
-	"include": ["types/svg.d.ts", "types/img.d.ts", "src/**/*"]
+	"include": [
+		"types/svg.d.ts",
+		"types/img.d.ts",
+		"types/woff.d.ts",
+		"src/**/*"
+	]
 }

@@ -1,25 +1,42 @@
 import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { CardHeader } from '@material-ui/core';
+import IconAda from '@/assets/iconAda.svg';
+import clsx from 'clsx';
+import IconBtc from '@/assets/iconBtc.svg';
+import AdminBadge from '@/assets/adminbadge.svg';
 
 const useStyles = makeStyles({
 	root: {
-		maxWidth: 265,
+		maxWidth: 340,
 		display: 'flex',
 		flexWrap: 'wrap',
 		backgroundColor: 'transparent',
 		boxShadow: 'none',
 		alignItems: 'center',
 	},
-	title: {
-		fontSize: 14,
-		flexBasis: '100%',
+	wrapperTitle: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		alignItems: 'end',
 		margin: '0 0 6px 0',
+		lineHeight: 1,
+	},
+	iconLeft: {
+		marginRight: 5,
+	},
+	iconRight: {
+		marginRight: 5,
+	},
+	userLevel: {
+		color: '#23B838',
+	},
+	title: {
+		fontSize: 13,
+		color: '#999999',
+		textAlign: 'center',
+		margin: 0,
+		marginRight: 5,
 	},
 	content: {
 		marginBottom: 12,
@@ -27,9 +44,15 @@ const useStyles = makeStyles({
 		borderRadius: '20px 20px 20px 0px;',
 		padding: '11px 12px',
 		margin: '0 10px 0 0',
+		minWidth: 150,
+		maxWidth: '80%',
 	},
-	test: {},
-	clock: {},
+	text: {
+		color: '#rgb(0,0,0)',
+	},
+	clock: {
+		color: 'rgba(255,255,255, .4)',
+	},
 });
 
 export type MsgType = {
@@ -49,11 +72,30 @@ export const MessageCard: FC<MessageCardProps> = ({ msg, username }) => {
 	const { from, text, createdAt } = msg;
 
 	const time = new Date(createdAt);
+	const firstUpper = from[0].toUpperCase() + from.slice(1);
+	const level = Math.floor(Math.random() * Math.floor(10));
 
 	return (
 		<Card className={classes.root}>
 			<div className={classes.content}>
-				<h3 className={classes.title}>{from}</h3>
+				{username !== msg.from ? (
+					<div className={classes.wrapperTitle}>
+						<span className={classes.iconLeft}>
+							<IconAda />
+						</span>
+						<h3 className={classes.title}>{firstUpper}</h3>
+						{username === 'admin' ? (
+							<span className={classes.iconRight}>
+								<AdminBadge />
+							</span>
+						) : (
+							''
+						)}
+						<span className={classes.userLevel}>{level}</span>
+					</div>
+				) : (
+					''
+				)}
 				<div className={classes.text}>{text}</div>
 			</div>
 			<div
