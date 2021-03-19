@@ -24,11 +24,11 @@ export const MessageList: FC<MessageListProps> = ({ messages, username }) => {
 
 	const messageEndRef = useRef<null | HTMLElement>(null);
 
-	// useEffect(() => {
-	// 	messageEndRef.current!.scrollIntoView({
-	// 		behavior: 'smooth',
-	// 	});
-	// });
+	useEffect(() => {
+		messageEndRef.current!.scrollIntoView({
+			behavior: 'smooth',
+		});
+	});
 
 	return (
 		<List component="ul" className={classes.root}>

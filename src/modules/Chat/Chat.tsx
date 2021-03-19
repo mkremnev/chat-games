@@ -69,7 +69,7 @@ const Chat: FC<{}> = () => {
 	const { messages, sendMessage } = useChat('common');
 	const [skip, setSkip] = useState(0);
 
-	let newMessages = [...fetchData, ...messages];
+	const messagesFull = [...fetchData, ...messages];
 
 	const request = async (num = 0) => {
 		try {
@@ -78,7 +78,7 @@ const Chat: FC<{}> = () => {
 					`https://api-23eqo.ondigitalocean.app/api/messages?skip=${num}&limit=15 `,
 				)
 				.then((response) => response.data);
-			setFetchData(data.reverse());
+			setFetchData([...fetchData, ...data.reverse()]);
 		} catch (error) {
 			console.log(error);
 		}
@@ -89,11 +89,11 @@ const Chat: FC<{}> = () => {
 
 		if (!scrollTop) {
 			let newSkip = skip;
-			setSkip((newSkip += 15));
-			request(skip);
-			newMessages = [...fetchData, ...newMessages];
+			newSkip += 15;
+			setSkip(newSkip);
+			request(newSkip);
 			console.log(
-				`new request skip = ${skip} длина ${newMessages.length}`,
+				`new request skip = ${skip} длина ${messagesFull.length}`,
 			);
 		}
 	};
@@ -103,14 +103,14 @@ const Chat: FC<{}> = () => {
 			request(skip);
 		}
 	}, []);
-
+	console.log(messagesFull);
 	return (
 		<div className={classes.root}>
 			<div className={classes.wrapper}>
 				<NavRoom
 					commonElement={
 						<MessageList
-							messages={newMessages}
+							messages={messagesFull}
 							username={username}
 						/>
 					}
