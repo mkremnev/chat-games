@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage/useLocalStorage';
 import { Button, makeStyles } from '@material-ui/core';
 import NavRoom from '@/components/NavRoom';
@@ -7,7 +7,8 @@ import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
 import SendMessageForm from '@/components/SendMessageForm';
 import MessageList from '@/components/MessageList';
-import { useChat } from '@/hooks/useChat/useChat';
+import { Message, useChat } from '@/hooks/useChat/useChat';
+import axios, { AxiosResponse } from 'axios';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -64,15 +65,56 @@ const useStyles = makeStyles(() => ({
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
 	const [username] = useLocalStorage('username', 'Maxim');
+	const [fetchData, setFetchData] = useState([]);
 	const { messages, sendMessage } = useChat('common');
+	const [skip, setSkip] = useState(0);
+
+	let newMessages = [...fetchData, ...messages];
+
+	const request = async (num = 0) => {
+		try {
+			const data = await axios
+				.get(
+					`https://api-23eqo.ondigitalocean.app/api/messages?skip=${num}&limit=15 `,
+				)
+				.then((response) => response.data);
+			setFetchData(data.reverse());
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const lazyLoad = (ev: ChangeEvent<HTMLElement>) => {
+		const scrollTop = ev.target.scrollTop;
+
+		if (!scrollTop) {
+			let newSkip = skip;
+			setSkip((newSkip += 15));
+			request(skip);
+			newMessages = [...fetchData, ...newMessages];
+			console.log(
+				`new request skip = ${skip} длина ${newMessages.length}`,
+			);
+		}
+	};
+
+	useEffect(() => {
+		if (!skip) {
+			request(skip);
+		}
+	}, []);
 
 	return (
 		<div className={classes.root}>
 			<div className={classes.wrapper}>
 				<NavRoom
 					commonElement={
-						<MessageList messages={messages} username={username} />
+						<MessageList
+							messages={newMessages}
+							username={username}
+						/>
 					}
+					onScroll={(ev: ChangeEvent<HTMLElement>) => lazyLoad(ev)}
 				/>
 				<SelectLang />
 				<Button className={classes.enlarge}>

@@ -34,9 +34,10 @@ const useStyles = makeStyles(() => ({
 
 export type NavRoomProp = {
 	commonElement: React.ReactElement<any, any>;
+	onScroll: (ev: ChangeEvent<HTMLElement>) => void;
 };
 
-export const NavRoom: FC<NavRoomProp> = ({ commonElement }) => {
+export const NavRoom: FC<NavRoomProp> = ({ commonElement, onScroll }) => {
 	const classes = useStyles();
 	const [roomId, setRoomId] = useState(0);
 
@@ -61,16 +62,16 @@ export const NavRoom: FC<NavRoomProp> = ({ commonElement }) => {
 					<Tab label="Новости" />
 				</Tabs>
 			</AppBar>
-			<TabPanel value={roomId} index={0}>
+			<TabPanel value={roomId} index={0} onScroll={onScroll}>
 				{commonElement}
 			</TabPanel>
-			<TabPanel value={roomId} index={1}>
+			<TabPanel value={roomId} index={1} onScroll={onScroll}>
 				Клан
 			</TabPanel>
-			<TabPanel value={roomId} index={2}>
+			<TabPanel value={roomId} index={2} onScroll={onScroll}>
 				Друзья
 			</TabPanel>
-			<TabPanel value={roomId} index={3}>
+			<TabPanel value={roomId} index={3} onScroll={onScroll}>
 				Новости
 			</TabPanel>
 		</Fragment>

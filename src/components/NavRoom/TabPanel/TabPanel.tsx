@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
 	value: number;
+	onScroll: (ev: ChangeEvent<HTMLElement>) => void;
 }
 
 const useStyles = makeStyles(() => ({
