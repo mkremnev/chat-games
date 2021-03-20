@@ -7,8 +7,9 @@ import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
 import SendMessageForm from '@/components/SendMessageForm';
 import MessageList from '@/components/MessageList';
-import { Message, useChat } from '@/hooks/useChat/useChat';
-import axios, { AxiosResponse } from 'axios';
+import { useChat } from '@/hooks/useChat/useChat';
+import axios from 'axios';
+import { nanoid } from '@reduxjs/toolkit';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -64,8 +65,8 @@ const useStyles = makeStyles(() => ({
 
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
-	const [username] = useLocalStorage('username', 'Maxim');
-	const [fetchData, setFetchData] = useState([]);
+	const [username] = useLocalStorage('username', nanoid(8));
+	const [fetchData, setFetchData] = useState<any>([]);
 	const { messages, sendMessage } = useChat('common');
 	const [skip, setSkip] = useState(0);
 
@@ -92,9 +93,6 @@ const Chat: FC<{}> = () => {
 			newSkip += 15;
 			setSkip(newSkip);
 			request(newSkip);
-			console.log(
-				`new request skip = ${skip} длина ${messagesFull.length}`,
-			);
 		}
 	};
 
@@ -103,7 +101,6 @@ const Chat: FC<{}> = () => {
 			request(skip);
 		}
 	}, []);
-	console.log(messagesFull);
 	return (
 		<div className={classes.root}>
 			<div className={classes.wrapper}>

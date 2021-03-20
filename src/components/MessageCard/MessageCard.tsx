@@ -5,6 +5,7 @@ import IconAda from '@/assets/iconAda.svg';
 import clsx from 'clsx';
 import IconBtc from '@/assets/iconBtc.svg';
 import AdminBadge from '@/assets/adminbadge.svg';
+import moment from 'moment';
 
 const useStyles = makeStyles({
 	root: {
@@ -81,7 +82,7 @@ export const MessageCard: FC<MessageCardProps> = ({ msg, username }) => {
 	const classes = useStyles();
 	const { from, text, createdAt } = msg;
 
-	const time = new Date(createdAt);
+	const time = moment(createdAt).utc().format('HH:mm');
 	const firstUpper = from[0].toUpperCase() + from.slice(1);
 	const level = Math.floor(Math.random() * Math.floor(10));
 
@@ -115,9 +116,7 @@ export const MessageCard: FC<MessageCardProps> = ({ msg, username }) => {
 				)}
 				<div className={classes.text}>{text}</div>
 			</div>
-			<div
-				className={classes.clock}
-			>{`${time.getHours()}:${time.getMinutes()}`}</div>
+			<div className={classes.clock}>{time}</div>
 		</Card>
 	);
 };
