@@ -9,6 +9,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"@/types/*": ["types/*"],
+			"@/api/*": ["src/api/*"],
 			"@/components/*": ["src/components/*"],
 			"@/modules/*": ["src/modules/*"],
 			"@/*": ["src/*"]

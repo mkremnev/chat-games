@@ -46,3 +46,5 @@ export const chatSlice = createSlice({
 		}),
 	},
 });
+
+export const { reducer, actions } = chatSlice;

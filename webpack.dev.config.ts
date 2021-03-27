@@ -15,8 +15,9 @@ const config: webpack.Configuration = {
 		extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
 		alias: {
 			types: path.resolve(__dirname, 'types/*'),
-			components: path.resolve(__dirname, 'src/components'),
-			modules: path.resolve(__dirname, 'src/modules'),
+			api: path.resolve(__dirname, 'src/api/*'),
+			components: path.resolve(__dirname, 'src/components/*'),
+			modules: path.resolve(__dirname, 'src/modules/*'),
 			'@': path.resolve(__dirname, 'src'),
 		},
 	},
