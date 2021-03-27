@@ -23,7 +23,7 @@ export const chatSlice = createSlice({
 	reducers: {
 		changeSkip: (state, { payload }: PayloadAction<number>) => ({
 			...state,
-			skip: payload,
+			skip: state.skip + payload,
 		}),
 		addMessage: (
 			state,

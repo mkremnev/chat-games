@@ -12,8 +12,8 @@ export type Message = {
 };
 
 export type MessageType = {
-	messageText: string;
-	senderName: string;
+	messageText?: string;
+	senderName?: string;
 };
 
 export const useChat = (roomId: string) => {
