@@ -2,7 +2,7 @@ import { take, call, put } from 'redux-saga/effects';
 import { createAddMessageChannel } from './channels';
 import { actions } from './redux';
 
-export function* freshJobsSaga() {
+export function* messageEventSaga() {
 	const channel = yield call(createAddMessageChannel);
 
 	while (true) {
