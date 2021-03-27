@@ -80,7 +80,7 @@ const Chat: FC<{}> = () => {
 					`https://api-23eqo.ondigitalocean.app/api/messages?skip=${num}&limit=15 `,
 				)
 				.then((response) => response.data);
-			dispatch(addMessage([...data]));
+			dispatch(addMessage([...data.reverse()]));
 		} catch (error) {
 			console.error(error);
 		}

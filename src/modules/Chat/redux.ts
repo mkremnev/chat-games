@@ -32,7 +32,7 @@ export const chatSlice = createSlice({
 			if (Array.isArray(payload)) {
 				return {
 					...state,
-					messages: [...state.messages, ...payload],
+					messages: [...payload, ...state.messages],
 				};
 			}
 			return {
