@@ -1,14 +1,11 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import { Picker } from 'emoji-mart';
-import {
-	Button,
-	InputAdornment,
-	makeStyles,
-	TextField,
-} from '@material-ui/core';
+import { Button, makeStyles, TextField } from '@material-ui/core';
 import Emoji from '@/assets/emodjis.svg';
 import { MessageType } from '@/hooks/useChat/useChat';
-import { color } from '@storybook/addon-knobs';
+import { useDispatch } from 'react-redux';
+import { actions } from '@/modules/Chat/redux';
+import { nanoid } from '@reduxjs/toolkit';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -43,16 +40,14 @@ const useStyles = makeStyles(() => ({
 
 export type SendMessageFormProps = {
 	username: string;
-	sendMessage: ({}: MessageType) => void;
 };
 
-export const SendMessageForm: FC<SendMessageFormProps> = ({
-	username,
-	sendMessage,
-}) => {
+export const SendMessageForm: FC<SendMessageFormProps> = ({ username }) => {
 	const classes = useStyles();
 	const [showEmoji, setChangeShowEmoji] = useState(false);
 	const [text, setText] = useState('');
+	const { sendMessage } = actions;
+	const dispatch = useDispatch();
 
 	const handlerChangeText = (ev: ChangeEvent<HTMLInputElement>) =>
 		setText(ev.target.value);
@@ -67,7 +62,14 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
 		const trimmed = text.trim();
 
 		if (trimmed) {
-			sendMessage({ senderName: username, messageText: text });
+			dispatch(
+				sendMessage({
+					id: nanoid(16),
+					from: username,
+					text: text,
+					createdAt: String(new Date()),
+				}),
+			);
 			setText('');
 		}
 	};

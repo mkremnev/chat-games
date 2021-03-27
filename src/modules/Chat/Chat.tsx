@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage/useLocalStorage';
 import { Button, makeStyles } from '@material-ui/core';
 import NavRoom from '@/components/NavRoom';
@@ -7,9 +7,12 @@ import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
 import SendMessageForm from '@/components/SendMessageForm';
 import MessageList from '@/components/MessageList';
-import { useChat } from '@/hooks/useChat/useChat';
+import { sendMessage } from '@/modules/Chat/channels';
 import axios from 'axios';
 import { nanoid } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChatState } from '@/store';
+import { actions } from '@/modules/Chat/redux';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -66,11 +69,9 @@ const useStyles = makeStyles(() => ({
 const Chat: FC<{}> = () => {
 	const classes = useStyles();
 	const [username] = useLocalStorage('username', nanoid(8));
-	const [fetchData, setFetchData] = useState<any>([]);
-	const { messages, sendMessage } = useChat('common');
-	const [skip, setSkip] = useState(0);
-
-	const messagesFull = [...fetchData, ...messages];
+	const { skip, messages } = useSelector((state: ChatState) => state.chat);
+	const { addMessage, changeSkip } = actions;
+	const dispatch = useDispatch();
 
 	const request = async (num = 0) => {
 		try {
@@ -79,9 +80,9 @@ const Chat: FC<{}> = () => {
 					`https://api-23eqo.ondigitalocean.app/api/messages?skip=${num}&limit=15 `,
 				)
 				.then((response) => response.data);
-			setFetchData([...fetchData, ...data.reverse()]);
+			dispatch(addMessage([...data]));
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 
@@ -91,7 +92,7 @@ const Chat: FC<{}> = () => {
 		if (!scrollTop) {
 			let newSkip = skip;
 			newSkip += 15;
-			setSkip(newSkip);
+			dispatch(changeSkip(15));
 			request(newSkip);
 		}
 	};
@@ -101,15 +102,13 @@ const Chat: FC<{}> = () => {
 			request(skip);
 		}
 	}, []);
+
 	return (
 		<div className={classes.root}>
 			<div className={classes.wrapper}>
 				<NavRoom
 					commonElement={
-						<MessageList
-							messages={messagesFull}
-							username={username}
-						/>
+						<MessageList messages={messages} username={username} />
 					}
 					onScroll={(ev: ChangeEvent<HTMLElement>) => lazyLoad(ev)}
 				/>
@@ -120,10 +119,7 @@ const Chat: FC<{}> = () => {
 				<Button className={classes.minimize}>
 					<Minimize />
 				</Button>
-				<SendMessageForm
-					username={username}
-					sendMessage={sendMessage}
-				/>
+				<SendMessageForm username={username} />
 			</div>
 		</div>
 	);

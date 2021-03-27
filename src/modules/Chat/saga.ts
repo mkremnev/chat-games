@@ -8,8 +8,18 @@ export function* messageEventSaga() {
 	while (true) {
 		const message = yield take(channel);
 
-		const action = actions.addMessage(message);
+		const addMessage = actions.addMessage(message);
+		const changeSkip = actions.changeSkip(1);
 
-		yield put(action);
+		yield put(addMessage);
+		yield put(changeSkip);
+	}
+}
+
+export function* sendMessageSaga() {
+	while (true) {
+		yield take(actions.sendMessage.type);
+		const changeSkip = actions.changeSkip(1);
+		yield put(changeSkip);
 	}
 }
