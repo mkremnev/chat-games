@@ -10,11 +10,13 @@ export type Message = {
 export type chatState = {
 	skip: number;
 	messages: Message[];
+	loading: boolean;
 };
 
 export const initialState: chatState = {
 	skip: 0,
 	messages: [],
+	loading: false,
 };
 
 export const chatSlice = createSlice({
