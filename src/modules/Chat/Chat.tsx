@@ -7,12 +7,11 @@ import Enlarge from '@/assets/enlarge.svg';
 import Minimize from '@/assets/minimize.svg';
 import SendMessageForm from '@/components/SendMessageForm';
 import MessageList from '@/components/MessageList';
-import { sendMessage } from '@/modules/Chat/channels';
-import axios from 'axios';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatState } from '@/store';
 import { actions } from '@/modules/Chat/redux';
+import { request } from '@/api/api-request';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -73,33 +72,23 @@ const Chat: FC<{}> = () => {
 	const { addMessage, changeSkip } = actions;
 	const dispatch = useDispatch();
 
-	const request = async (num = 0) => {
-		try {
-			const data = await axios
-				.get(
-					`https://api-23eqo.ondigitalocean.app/api/messages?skip=${num}&limit=15 `,
-				)
-				.then((response) => response.data);
-			dispatch(addMessage([...data.reverse()]));
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	const lazyLoad = (ev: ChangeEvent<HTMLElement>) => {
 		const scrollTop = ev.target.scrollTop;
 
 		if (!scrollTop) {
-			let newSkip = skip;
-			newSkip += 15;
-			dispatch(changeSkip(15));
-			request(newSkip);
+			request(skip).then((data) => {
+				dispatch(addMessage([...data.reverse()]));
+				dispatch(changeSkip(15));
+			});
 		}
 	};
 
 	useEffect(() => {
 		if (!skip) {
-			request(skip);
+			request(skip).then((data) => {
+				dispatch(addMessage([...data.reverse()]));
+				dispatch(changeSkip(15));
+			});
 		}
 	}, []);
 
